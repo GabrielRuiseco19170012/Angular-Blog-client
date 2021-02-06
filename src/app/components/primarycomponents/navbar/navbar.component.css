@@ -1,0 +1,12 @@
+#logo {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+  background-size: 100% auto;
+}
+
+.navbar-brand{
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 20px;
+}
