@@ -1,7 +1,7 @@
-import { environment } from './../../../environments/environment';
-import { PublicationInterface } from './../../interfaces/publication-interface';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {environment} from './../../../environments/environment';
+import {PublicationInterface} from './../../interfaces/publication-interface';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'

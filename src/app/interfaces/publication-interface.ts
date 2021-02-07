@@ -1,7 +1,7 @@
 export interface PublicationInterface {
-    id?:String;
-    user_id:String;
-    title:String;
-    content:String;
+  id?: string;
+  user_id: string;
+  title: string;
+  content: string;
 }
 

@@ -1,13 +1,12 @@
-import { PublicationInterface } from './../../interfaces/publication-interface';
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Observable, Observer} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {TokenPayload} from '../../interfaces/TokenPayload';
 import {TokenResponse} from '../../interfaces/TokenResponse';
 import {map} from 'rxjs/operators';
 import {UserInterface} from '../../interfaces/UserInterface';
+import {UserDetails} from '../../interfaces/user-details';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +46,11 @@ export class AuthService {
   public register(user: UserInterface): Observable<any> {
     return this.http.post(environment.api + 'register', user);
   }
+
+  public updateUser(user: UserDetails, id): Observable<any> {
+    return this.http.put(environment.api + `update/${id}`, user);
+  }
+
   public login(user: UserInterface): Observable<any> {
     const base = this.http.post(`${environment.api}login`, user);
 
@@ -65,6 +69,10 @@ export class AuthService {
     return this.http.get(`${environment.api}getuser/${id}`);
   }
 
+  public getUserId(): Observable<any> {
+    return this.http.get(environment.api + 'getId');
+  }
+
   public logout(): void {
     this.state = false;
     window.localStorage.removeItem('value');
@@ -72,4 +80,5 @@ export class AuthService {
     window.localStorage.removeItem('userToken');
     this.router.navigateByUrl('/');
   }
+
 }

@@ -1,7 +1,7 @@
-import { AuthService } from './../../services/auth/auth.service';
-import { PublicationService } from './../../services/publication/publication.service';
-import { PublicationInterface } from './../../interfaces/publication-interface';
-import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../services/auth/auth.service';
+import {PublicationService} from '../../services/publication/publication.service';
+import {PublicationInterface} from '../../interfaces/publication-interface';
+import {Component, OnInit} from '@angular/core';
 
 @Component({  
   selector: 'app-publications',
