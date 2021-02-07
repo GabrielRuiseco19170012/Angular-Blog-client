@@ -1,10 +1,8 @@
-import { UserInterface } from './../../interfaces/UserInterface';
-
-import { Component, OnInit } from '@angular/core';
+import {UserInterface} from '../../interfaces/UserInterface';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
-import { ProfileInterface } from './../../interfaces/profile-interface';
-import { FormControl, FormGroup } from '@angular/forms';
-
+import {FormControl} from '@angular/forms';
+import {UserDetails} from '../../interfaces/user-details';
 
 
 @Component({
@@ -14,94 +12,90 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
 
-  id:string
-  profile:ProfileInterface = {
-    username:"",
-    first_name:"",
-    last_name:"",
-    email:""
-  }
-  formUsername = new FormControl('')
-  formUser = new FormGroup({
-    username: new FormControl(''),
-    first_name: new FormControl(''),
-    last_name: new FormControl(''),
-    email: new FormControl('')
-  })
-  
-  constructor(private auth: AuthService) {}
+  details: UserDetails = {
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+  };
 
-  ngOnInit() {
-    this.getProfile()
+  formUsername = new FormControl('');
+  formFirstName = new FormControl('');
+  formLastName = new FormControl('');
+  formEmail = new FormControl('');
+
+  id: string;
+
+  constructor(private auth: AuthService) {
   }
 
-  public getProfile() :void{
-    this.auth.getUserId().subscribe(
-      (res:string) => {
-        this.id= res
-        this.auth.profile(this.id).subscribe(
-          (res:ProfileInterface) => {
-            this.profile = res
-            console.log(this.profile)
-          },
-          error => {
-            console.error(error);
-          }
-        )
+
+  ngOnInit(): void {
+    this.getUserDetails();
+  }
+
+
+  getUserDetails(): void {
+    this.auth.getUserDetails().subscribe(data => {
+      this.id = data.id;
+      console.log(data.id);
+      console.log(this.id);
+      this.auth.profile(data.id).subscribe(
+        user => {
+          this.details = user;
+        }, error => {
+          console.error(error);
+        }
+      );
+    });
+  }
+
+  updateUsername(): void {
+    this.details.username = this.formUsername.value;
+    this.auth.updateUser(this.details, this.id).subscribe((res1: UserInterface) => {
+        console.log(res1);
       },
       error => {
         console.error(error);
       }
-    )
+    );
+    this.getUserDetails();
   }
 
-  updateUsername(){
-    this.auth.getUserId().subscribe(
-      (res:string) => {
-        this.id= res
-        this.profile.username = this.formUsername.value
-        console.log(this.profile)
-        this.auth.updateUser(this.profile).subscribe((res:UserInterface)=>{
-          console.log(res)
-          this.getProfile()
-        },
-        error =>{
-          console.error(error)
-        })
-      },
-      error => {
-        console.error(error)
-      }
-    )
-
-  }
-
-
-
-  /*
-  public getId() :void {
-    this.auth.getUserId().subscribe(
-      (res:string) => {
-        this.id= res
+  updateFirstName(): void {
+    this.details.first_name = this.formFirstName.value;
+    this.auth.updateUser(this.details, this.id).subscribe((res2: UserInterface) => {
+        console.log(res2);
       },
       error => {
         console.error(error);
       }
-    )
+    );
+    this.getUserDetails();
   }
 
-  public getProfile() :void{
-    this.getId()
-    this.auth.profile(this.id).subscribe(
-      (res:Observable<any>) => {
-        this.profile = res
-        console.log(this.profile)
+  updateLastName(): void {
+    this.details.last_name = this.formLastName.value;
+    this.auth.updateUser(this.details, this.id).subscribe((res3: UserInterface) => {
+        console.log(res3);
       },
       error => {
         console.error(error);
       }
-    )
+    );
+    this.getUserDetails();
   }
-  */
+
+  updateEmail(): void {
+    this.details.email = this.formEmail.value;
+    this.auth.updateUser(this.details, this.id).subscribe((res4: UserInterface) => {
+        console.log(res4);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+    this.getUserDetails();
+  }
 
 }
