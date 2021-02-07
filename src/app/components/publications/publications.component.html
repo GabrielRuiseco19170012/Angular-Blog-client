@@ -1,6 +1,35 @@
 <p>publications works!</p>
 <div class="row justify-content-center">
   <div class="col-md-8 mt-4 ml-4">
+    <li *ngFor="let publi of arrayPublicaciones">
+      <ul><b>ID AUTOR:</b>{{publi.user_id}}</ul>
+      <ul><b>TITLE:</b>{{publi.title}}</ul>
+      <ul><b>CONTENT:</b>{{publi.content}}</ul>
+    </li>
+    <h1>Crear nueva publicación.</h1>
+    <input class="form-control" type="text" id="user_id" name="user_id" [(ngModel)]="user_id" placeholder="user_id">
+    <p>{{user_id}}</p>
+    <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" placeholder="title">
+    <p>{{title}}</p>
+    <input class="form-control" type="text" id="content" name="content" [(ngModel)]="content" placeholder="content">
+    <p>{{content}}</p>
+    <button type="button" class="btn btn-danger" (click)="addNewPost()">Añadir</button>
+    <h1>Actualizar titulo</h1>
+    <input type="text" class="form-control" id="id" name="id" [(ngModel)]="id" placeholder="ID publicacion">
+    <p>{{id}}</p>
+    <input type="text" class="form-control" id="titleUp" name="titleUp" [(ngModel)]="title" placeholder="Titulo nuevo">
+    <p>{{title}}</p>
+    <button type="button" class="btn btn-danger" (click)="upTitlePost()">Actualizar</button>
+    <h1>Actualizar contenido</h1>
+    <input type="text" class="form-control" id="idPu" name="idPu" [(ngModel)]="id" placeholder="ID publicacion">
+    <p>{{id}}</p>
+    <input type="text" class="form-control" id="contUp" name="contUp" [(ngModel)]="content" placeholder="Titulo nuevo">
+    <p>{{content}}</p>
+    <button type="button" class="btn btn-danger" (click)="upContentPost()">Actualizar</button>
+    <h1>BorrarPublicacion</h1>
+    <input type="text" class="form-control" id="idD" name="idD" [(ngModel)]="id" placeholder="ID publicacion">
+    <p>{{id}}</p>
+    <button type="button" class="btn btn-danger" (click)="deletePost()">Borrar</button>
     <app-comentaries></app-comentaries>
   </div>
 </div>

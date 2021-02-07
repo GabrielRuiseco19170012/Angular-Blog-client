@@ -1,3 +1,4 @@
+import { PublicationInterface } from './../../interfaces/publication-interface';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -46,7 +47,22 @@ export class AuthService {
   public register(user: UserInterface): Observable<any> {
     return this.http.post(environment.api + 'register', user);
   }
-
+  public addNewtPost(publicacion:PublicationInterface){
+    return this.http.post(environment.api+`api/v1/insert/publication`,publicacion);
+  }
+  public upTitlePost(publicacion:PublicationInterface){
+    const path = environment.api+`api/v1/update/publication/title/`
+    return this.http.put<PublicationInterface>(path,publicacion)
+  }
+  public upContentPost(publicacion:PublicationInterface){
+    const path = environment.api+`api/v1/update/publication/text/`
+    return this.http.put<PublicationInterface>(path,publicacion)
+  }
+  //Help
+  public deletePost(publicacion:PublicationInterface){
+    const path = environment.api+`api/v1/delete/publication/`
+    return this.http.delete(path)
+  }
   public login(user: UserInterface): Observable<any> {
     const base = this.http.post(`${environment.api}login`, user);
 
