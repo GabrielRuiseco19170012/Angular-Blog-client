@@ -15,4 +15,23 @@ export class PublicationService {
   /*public addNewtPost(publicacion:PublicationInterface){
     return this.Http.post(this.path+`api/v1/insert/publication`,publicacion);
   }*/
+  public getPostTitle(publicacion:PublicationInterface){
+    return this.Http.get(environment.api+`api/v1/show/publication/title`)
+  }
+  public addNewtPost(publicacion:PublicationInterface){
+    return this.Http.post(environment.api+`api/v1/insert/publication`,publicacion);
+  }
+  public upTitlePost(publicacion:PublicationInterface){
+    const path = environment.api+`api/v1/update/publication/title/`
+    return this.Http.put<PublicationInterface>(path,publicacion)
+  }
+  public upContentPost(publicacion:PublicationInterface){
+    const path = environment.api+`api/v1/update/publication/text/`
+    return this.Http.put<PublicationInterface>(path,publicacion)
+  }
+  //Help
+  public deletePost(publicacion:PublicationInterface){
+    const path = environment.api+`api/v1/delete/publication/`
+    return this.Http.delete(path)
+  }
 }

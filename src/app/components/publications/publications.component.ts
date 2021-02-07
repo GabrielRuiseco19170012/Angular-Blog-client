@@ -34,7 +34,7 @@ export class PublicationsComponent implements OnInit {
       title: this.title,
       content: this.content
     };
-    this.asd.addNewtPost(newPublicacion).subscribe((nuevo)=>{console.log(nuevo)})
+    this.publicationService.addNewtPost(newPublicacion).subscribe((nuevo)=>{console.log(nuevo)})
   }
   upTitlePost(){
     const upTitle = {
@@ -43,7 +43,7 @@ export class PublicationsComponent implements OnInit {
       title:this.title,
       content:this.content
     };
-    this.asd.upTitlePost(upTitle).subscribe(nuevo=>{console.log(nuevo)})
+    this.publicationService.upTitlePost(upTitle).subscribe(nuevo=>{console.log(nuevo)})
   }
   upContentPost(){
     const upContent = {
@@ -52,7 +52,7 @@ export class PublicationsComponent implements OnInit {
       title:this.title,
       content:this.content
     };
-    this.asd.upContentPost(upContent).subscribe(nuevo=>{console.log(nuevo)})
+    this.publicationService.upContentPost(upContent).subscribe(nuevo=>{console.log(nuevo)})
   }
   deletePost(){
     const deleteContent = {
@@ -61,6 +61,6 @@ export class PublicationsComponent implements OnInit {
       title:this.title,
       content:this.content
     };
-    this.asd.deletePost(deleteContent).subscribe((borrado)=>{console.log(borrado)})
+    this.publicationService.deletePost(deleteContent).subscribe((borrado)=>{console.log(borrado)})
   }
 }
