@@ -1,1 +1,41 @@
-<p>comentaries works!</p>
+<div class="container col-md-4">
+    <div class="col-md-8 offset-md-2">
+        <div class="card" >
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" name="title" [(ngModel)]="commentary.title" placeholder="Title" class="form-control" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <textarea  name="content" [(ngModel)]="commentary.content" placeholder="Content" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="public id" [(ngModel)]="commentary.publication_id" placeholder="publication id" class="form-control" >
+                        <input type="text" name="user id" [(ngModel)]="commentary.user_id" placeholder="user id" class="form-control" >
+                        <p>{{commentary.title}}</p>
+                    </div>
+                    <button class="btn btn-success btn-block" (click)="savedCommentary()">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <!--<div class="col-md-4" *ngFor="let com of comms">    
+        <div class="card text-center" >
+                 <div class="card-header">
+                        <h3>Commentaries</h3>
+                </div>
+                <div class="card-body">
+                        <h5 class="card-title">{{com.title}}</h5>
+                        <p class="card-text">{{com.content}}</p>
+                </div>
+        </div>
+    </div>-->
+</div>
+
+
+
+
+
+
+    
