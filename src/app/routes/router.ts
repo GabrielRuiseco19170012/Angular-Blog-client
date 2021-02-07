@@ -18,6 +18,7 @@ const APP_ROUTES: Routes = [
   // DOS
   {path: 'comentaries', component: ComentariesComponent },
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
+  {path: 'publication', component: PublicationsComponent},
   {path: '**', pathMatch: 'full', component: Page404Component }
 ];
 
