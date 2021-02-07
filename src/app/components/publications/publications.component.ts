@@ -34,15 +34,13 @@ export class PublicationsComponent implements OnInit {
       });
   }
 
-  addNewPost(): void{
+  addNewPost(): void {
     const newPublicacion = {
       user_id: this.user_id,
       title: this.title,
       content: this.content
     };
-    this.asd.addNewtPost(newPublicacion).subscribe((nuevo) => {
-      console.log(nuevo);
-    });
+
   }
 
   upTitlePost() {
@@ -52,9 +50,6 @@ export class PublicationsComponent implements OnInit {
       title: this.title,
       content: this.content
     };
-    this.asd.upTitlePost(upTitle).subscribe(nuevo => {
-      console.log(nuevo);
-    });
   }
 
   upContentPost() {
@@ -64,9 +59,7 @@ export class PublicationsComponent implements OnInit {
       title: this.title,
       content: this.content
     };
-    this.asd.upContentPost(upContent).subscribe(nuevo => {
-      console.log(nuevo);
-    });
+
   }
 
   deletePost() {
@@ -76,8 +69,6 @@ export class PublicationsComponent implements OnInit {
       title: this.title,
       content: this.content
     };
-    this.asd.deletePost(deleteContent).subscribe((borrado) => {
-      console.log(borrado);
-    });
+
   }
 }

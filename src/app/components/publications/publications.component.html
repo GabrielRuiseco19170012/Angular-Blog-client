@@ -6,30 +6,39 @@
       <ul><b>TITLE:</b>{{publi.title}}</ul>
       <ul><b>CONTENT:</b>{{publi.content}}</ul>
     </li>
-    <h1>Crear nueva publicación.</h1>
-    <input class="form-control" type="text" id="user_id" name="user_id" [(ngModel)]="user_id" placeholder="user_id">
-    <p>{{user_id}}</p>
-    <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" placeholder="title">
-    <p>{{title}}</p>
-    <input class="form-control" type="text" id="content" name="content" [(ngModel)]="content" placeholder="content">
-    <p>{{content}}</p>
-    <button type="button" class="btn btn-danger" (click)="addNewPost()">Añadir</button>
-    <h1>Actualizar titulo</h1>
-    <input type="text" class="form-control" id="id" name="id" [(ngModel)]="id" placeholder="ID publicacion">
-    <p>{{id}}</p>
-    <input type="text" class="form-control" id="titleUp" name="titleUp" [(ngModel)]="title" placeholder="Titulo nuevo">
-    <p>{{title}}</p>
-    <button type="button" class="btn btn-danger" (click)="upTitlePost()">Actualizar</button>
-    <h1>Actualizar contenido</h1>
-    <input type="text" class="form-control" id="idPu" name="idPu" [(ngModel)]="id" placeholder="ID publicacion">
-    <p>{{id}}</p>
-    <input type="text" class="form-control" id="contUp" name="contUp" [(ngModel)]="content" placeholder="Titulo nuevo">
-    <p>{{content}}</p>
-    <button type="button" class="btn btn-danger" (click)="upContentPost()">Actualizar</button>
-    <h1>BorrarPublicacion</h1>
-    <input type="text" class="form-control" id="idD" name="idD" [(ngModel)]="id" placeholder="ID publicacion">
-    <p>{{id}}</p>
-    <button type="button" class="btn btn-danger" (click)="deletePost()">Borrar</button>
+  <div>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Crear Publicación
+      </button>
+      <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear una publicación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                <input class="form-control" type="text" id="user_id" name="user_id" [(ngModel)]="user_id" placeholder="user_id">
+                <p>{{user_id}}</p>
+                <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" placeholder="title">
+                <p>{{title}}</p>
+                <input class="form-control" type="text" id="content" name="content" [(ngModel)]="content" placeholder="content">
+                <p>{{content}}</p>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addNewPost()">Crear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <app-comentaries></app-comentaries>
   </div>
 </div>
