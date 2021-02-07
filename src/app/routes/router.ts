@@ -14,6 +14,7 @@ const APP_ROUTES: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'blog', component: PublicationsComponent, canActivate: [AuthGuardService]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
+  {path: 'publication', component: PublicationsComponent},
   {path: '**', pathMatch: 'full', component: Page404Component }
 ];
 

@@ -1,6 +1,44 @@
 <p>publications works!</p>
 <div class="row justify-content-center">
   <div class="col-md-8 mt-4 ml-4">
+    <li *ngFor="let publi of arrayPublicaciones">
+      <ul><b>ID AUTOR:</b>{{publi.user_id}}</ul>
+      <ul><b>TITLE:</b>{{publi.title}}</ul>
+      <ul><b>CONTENT:</b>{{publi.content}}</ul>
+    </li>
+  <div>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Crear Publicación
+      </button>
+      <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear una publicación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                <input class="form-control" type="text" id="user_id" name="user_id" [(ngModel)]="user_id" placeholder="user_id">
+                <p>{{user_id}}</p>
+                <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" placeholder="title">
+                <p>{{title}}</p>
+                <input class="form-control" type="text" id="content" name="content" [(ngModel)]="content" placeholder="content">
+                <p>{{content}}</p>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addNewPost()">Crear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <app-comentaries></app-comentaries>
   </div>
 </div>
