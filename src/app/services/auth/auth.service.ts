@@ -1,4 +1,3 @@
-import {ProfileInterface} from '../../interfaces/profile-interface';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -33,11 +32,11 @@ export class AuthService {
   }
 
   public getUserDetails(): Observable<any> {
-    return this.http.get(environment.api + 'loggedIn');
+    return this.http.get(environment.serverRoutes + 'loggedIn');
   }
 
   public isLoggedIn(): Observable<any> {
-    return this.http.get(environment.api + 'loginCheck');
+    return this.http.get(environment.serverRoutes + 'loginCheck');
   }
 
   public navItems(): boolean {
@@ -45,15 +44,15 @@ export class AuthService {
   }
 
   public register(user: UserInterface): Observable<any> {
-    return this.http.post(environment.api + 'register', user);
+    return this.http.post(environment.serverRoutes + 'register', user);
   }
 
   public updateUser(user: UserDetails, id): Observable<any> {
-    return this.http.put(environment.api + `update/${id}`, user);
+    return this.http.put(environment.serverRoutes + `update/${id}`, user);
   }
 
   public login(user: UserInterface): Observable<any> {
-    const base = this.http.post(`${environment.api}login`, user);
+    const base = this.http.post(`${environment.serverRoutes}login`, user);
 
     return base.pipe(
       map((data: TokenResponse) => {
@@ -67,11 +66,7 @@ export class AuthService {
   }
 
   public profile(id): Observable<any> {
-    return this.http.get(`${environment.api}getuser/${id}`);
-  }
-
-  public getUserId(): Observable<any> {
-    return this.http.get(environment.api + 'getId');
+    return this.http.get(`${environment.serverRoutes}getuser/${id}`);
   }
 
   public logout(): void {

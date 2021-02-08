@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ComentariesService} from '../../services/comentaries.service';
+import {ComentariesService} from '../../services/comentaries/comentaries.service';
 import {Comentary} from '../../interfaces/comentary'
 @Component({
   selector: 'app-comentaries',
@@ -21,7 +21,7 @@ export class ComentariesComponent implements OnInit {
   };
 
   comms:Array<Comentary>
-  
+
   constructor(private commentaryService:ComentariesService) { }
 
   ngOnInit(): void {

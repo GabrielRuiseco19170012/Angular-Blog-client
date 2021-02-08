@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://127.0.0.1:3333/'
+  serverRoutes: 'http://127.0.0.1:3333/',
+  apiRoutes: 'http://127.0.0.1:3333/api/'
 };
 
 /*
