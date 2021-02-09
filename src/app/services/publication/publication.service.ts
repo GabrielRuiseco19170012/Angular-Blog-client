@@ -19,14 +19,14 @@ export class PublicationService {
   }
 
   public getAllPosts(): Observable<any> {
-    return this.Http.get<PublicationInterface[]>(this.path + 'show/publication');
+    return this.Http.get(this.path + 'show/publication');
   }
 
-  public getPostID(publicacion: PublicationInterface): Observable<any> {
+  public getPostID(publicacion: { user_id: number; id: number; title: string; content: string }): Observable<any> {
     return this.Http.get<PublicationInterface[]>(this.path + `show/publication/id?id=${publicacion.id}`);
   }
 
-  public getPostTitle(publicacion: PublicationInterface): Observable<any> {
+  public getPostTitle(publicacion: { user_id: number; id: number; title: string; content: string }): Observable<any> {
     return this.Http.get<PublicationInterface[]>(this.path + `show/publication/title?title=${publicacion.title}`);
   }
 

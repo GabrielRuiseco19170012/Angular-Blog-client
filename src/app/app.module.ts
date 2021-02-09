@@ -23,6 +23,7 @@ import {InterceptorService} from './services/interceptor/interceptor.service';
 import {AuthService} from './services/auth/auth.service';
 import {AuthGuardService} from './services/auth-guard/auth-guard.service';
 import {ComentariesService} from './services/comentaries/comentaries.service';
+import { BlogComponent } from './components/blog/blog.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {ComentariesService} from './services/comentaries/comentaries.service';
     ComentariesComponent,
     Page404Component,
     ProfileComponent,
+    BlogComponent,
   ],
   imports: [
     BrowserModule,

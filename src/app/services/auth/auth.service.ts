@@ -53,7 +53,6 @@ export class AuthService {
 
   public login(user: UserInterface): Observable<any> {
     const base = this.http.post(`${environment.serverRoutes}login`, user);
-
     return base.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
@@ -74,7 +73,7 @@ export class AuthService {
     window.localStorage.removeItem('value');
     this.token = '';
     window.localStorage.removeItem('userToken');
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
   }
 
 }

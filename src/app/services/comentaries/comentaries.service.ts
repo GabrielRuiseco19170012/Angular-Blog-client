@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Comentary} from '../../interfaces/comentary';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 
@@ -17,12 +17,12 @@ export class ComentariesService {
   }
 
   showCommentary(): Observable<any> {
-    return this.http.get<Comentary[]>(`${environment.apiRoutes}show/comments`);
+    return this.http.get(`${environment.apiRoutes}show/comments`);
   }
 
 
-  getCommentary(): Observable<any> {
-    return this.http.get(`${environment.apiRoutes}show/commentary`);
+  getCommentaryByPub(id): Observable<any> {
+    return this.http.get(`${environment.apiRoutes}show/publication/comments?id=${id}`);
   }
 
   deleteCommentary(): Observable<any> {

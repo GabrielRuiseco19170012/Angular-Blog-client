@@ -1,156 +1,185 @@
-<div class="row justify-content-center">
-  <div class="col-md-8 mt-4 ml-4">
-<!--Crear publicacion-->
-        <h4 style="color: white; text-align: center;">Bienvenido, ¿Tienes algo que aportar? ¡Adelante crea tu nuevo blog!</h4>
-          <div>          
-            <button style="width: 15rem;" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalInsertar">
-            Crear Publicación
-          </button>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <h4 class="mt-3" style="color: white; text-align: center;">Bienvenido, ¿Tienes algo que aportar? ¡Adelante crea
+          tu nuevo
+          blog!</h4>
+        <div class="row justify-content-center">
+          <div>
+            <button style="width: 15rem;" type="button" class="btn btn-success mt-3" data-toggle="modal"
+                    data-target="#modalInsertar">
+              Crear Publicación
+            </button>
+          </div>
           <br/>
         </div>
-        <div class="modal fade" id="modalInsertar" tabindex="-1" aria-labelledby="modalInsertarLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalInsertarLabel">Crear publicación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button (click)="status=!status" class="btn btn-block btn-secondary" *ngIf="!status">Mostrar Publicaciones
+      </button>
+      <button (click)="status=!status" class="btn btn-block btn-secondary" *ngIf="status">Ocultar Publicaciones</button>
+    </div>
+    <div class="row justify-content-center mt-5" style="height: 21vh">
+      <div class="col text-center">
+        <h4 style="text-align: center; color: white;">¿No encuentras lo que buscas? !Buscalo por su nombre¡</h4>
+        <button style="width: 15rem;" type="button" class="btn btn-primary mt-2" data-toggle="modal"
+                data-target="#ModalSelectTitulo">
+          Buscar Publicación
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card bg-secondary" *ngIf="status">
+      <div class="card-title mt-2 text-light text-center">
+        <h3>Lista</h3>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li *ngFor="let publication of arrayPublicaciones"
+              class="list-group-item bg-secondary list-group-item-action"
+              [class.active]="publication == selectedPublication">
+            <label class="text-light">Titulo</label>
+            <div class="input-group mb-3 form-group">
+              <input (click)="openData(publication)" class="form-control form-control-lg text-light bg-secondary"
+                     type="text" [(ngModel)]="publication.title" aria-label=".form-control-lg example"
+                     readonly name="username">
+              <div class="input-group-append">
+                <button (click)="selectedPub(publication)" type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#actualizarTitulo">
+                  Editar
+                </button>
+                <button class="btn btn-danger" (click)="deletePost(publication)">
+                  Eliminar
                 </button>
               </div>
-              <div class="modal-body">
-                <input type="tex" class="form-control" id="title" name="title" [(ngModel)]="title" placeholder="Titulo">
-                <input type="tex" class="form-control" id="content" name="content" [(ngModel)]="content" placeholder="Contenido">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success"(click)="addNewPost();ngOnInit()" data-dismiss="modal">Crear</button>
-              </div>
             </div>
-          </div>
-        </div>
-<!--Todas las publicaciones-->
-        <h3 style="text-align: center; color: white;">Nuestro Contenido</h3>
-      <div *ngFor="let publit of arrayPublicaciones; let i=index">
-        <div *ngIf="i<3">
-          <div class="input-group mb-3">
-            <h4 style="color: white; text-align: center;">{{publit.title}}</h4>
-            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#actualizarTitulo">Editar</button>
-          </div>
-          <div class="input-group mb-3">
-            <h6 style="color: white;">{{publit.content}}</h6>
-            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#actualizarContenido">Editar</button>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row justify-content-center">
+  <div class="col-md-8 mt-4 ml-4">
     <div *ngIf="buscador==true">
       <div *ngFor="let tit of arrayByTitle">
         <div class="input-group mb-3">
           <h4 style="color: white; text-align: center;">{{tit.title}}</h4>
-          <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#actualizarTitulo">Editar</button>
+          <button (click)="selectedPub(tit)" type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                  data-target="#actualizarTitulo">
+            Editar
+          </button>
         </div>
         <div class="input-group mb-3">
           <h6 style="color: white;">{{tit.content}}</h6>
-          <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#actualizarContenido">Editar</button>
+          <button (click)="selectedPub(tit)" type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                  data-target="#actualizarContenido">
+            Editar
+          </button>
         </div>
       </div>
     </div>
-    <!--Buscar-->
-    <!--Buscar Publicacion Titulo-->
-    <div>
-      <h4 style="text-align: center; color: white;">¿No encuentras lo que buscas? !Buscalo por su nombre¡</h4>
-      <button style="width: 15rem;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalSelectTitulo">
-        Buscar Publicación
-      </button>
-      <div class="modal fade" id="ModalSelectTitulo" tabindex="-1" aria-labelledby="ModalSelectTituloLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="ModalSelectTituloLabel">Ingresa el titulo</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" placeholder="Titulo">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary"(click)="getPostTitle()" data-dismiss="modal">Buscar</button>
-            </div>
-          </div>
+  </div>
+</div>
+
+<div>
+  <div class="modal fade" id="ModalSelectTitulo" tabindex="-1" aria-labelledby="ModalSelectTituloLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalSelectTituloLabel">Ingresa el titulo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control" type="text" id="title2" name="title" [(ngModel)]="title" placeholder="Titulo">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="getPostTitle()" data-dismiss="modal">Buscar
+          </button>
         </div>
       </div>
     </div>
-    <!--Actualizar Titulo-->
-    <div class="modal fade" id="actualizarTitulo" tabindex="-1" aria-labelledby="actualizarTituloLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="actualizarTituloLabel">Actualizando Titulo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="text" id="idNewT" name="idNewT" class="form-control" [(ngModel)]="id" placeholder="ID">
-            <input type="text" id="newTit" name="newTit" class="form-control" [(ngModel)]="title" placeholder="Nuevo Titulo">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-warning" (click)="upTitlePost()" data-dismiss="modal">Actualizar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Actualizar Contenido-->
-    <div>
-      <div class="modal fade" id="actualizarContenido" tabindex="-1" aria-labelledby="actualizarContenidoLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="actualizarContenidoLabel">Actualizar Contenido</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <input type="text" id="idNewC" name="idNewC" class="form-control" [(ngModel)]="id" placeholder="ID">
-              <input type="text" id="newCont" name="newCont" class="form-control" [(ngModel)]="content" placeholder="Nuevo Contenido">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-warning" (click)="upContentPost()" data-dismiss="modal">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-      <!--Eliminar Post-->
-      <h4 style="text-align: center; color: white;">¿Consideras algo inapropiado? Borralo.</h4>
-      <div>
-        <button style="width: 15rem;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarPost">
-          Eliminar Publicación
+  </div>
+</div>
+<!--Actualizar Titulo-->
+<div class="modal fade" id="actualizarTitulo" tabindex="-1" aria-labelledby="actualizarTituloLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actualizarTituloLabel">Actualizando Titulo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
-        <div class="modal fade" id="eliminarPost" tabindex="-1" aria-labelledby="eliminarPostLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="eliminarPostLabel">Eliminar Publicación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <input type="text" id="delete" name="delete" class="form-control" [(ngModel)]="id" placeholder="ID">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" (click)="deletePost();ngOnInit()" data-dismiss="modal">Eliminar</button>
-              </div>
-            </div>
-          </div>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="newTit" name="newTit" class="form-control" [(ngModel)]="selectedPublication.title"
+               placeholder="Nuevo Titulo">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-warning" (click)="upTitlePost()" data-dismiss="modal">Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Actualizar Contenido-->
+<div>
+  <div class="modal fade" id="actualizarContenido" tabindex="-1" aria-labelledby="actualizarContenidoLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="actualizarContenidoLabel">Actualizar Contenido</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="newCont" name="newCont" class="form-control" [(ngModel)]="selectedPublication.content"
+                 placeholder="Nuevo Contenido">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-warning" (click)="upContentPost()" data-dismiss="modal">Save
+            changes
+          </button>
         </div>
       </div>
-    <app-comentaries></app-comentaries>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalInsertar" tabindex="-1" aria-labelledby="modalInsertarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalInsertarLabel">Crear publicación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="tex" class="form-control" id="title" name="title" [(ngModel)]="selectedPublication.title"
+               placeholder="Titulo">
+        <input type="tex" class="form-control" id="content" name="content" [(ngModel)]="selectedPublication.content"
+               placeholder="Contenido">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success" (click)="addNewPost();" data-dismiss="modal">Crear
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -15,9 +15,12 @@ export class AuthGuardService {
     await this.auth.isLoggedIn().toPromise().then(result => {
       console.log(result);
       this.res = result;
+      console.log(this.res);
     });
     if (!this.res) {
       this.router.navigateByUrl('/');
+      window.alert('session expired');
+      this.auth.logout();
       return false;
     } else {
       return true;

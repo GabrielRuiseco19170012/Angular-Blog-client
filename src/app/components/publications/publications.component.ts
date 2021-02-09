@@ -1,6 +1,11 @@
 import {PublicationService} from '../../services/publication/publication.service';
 import {PublicationInterface} from '../../interfaces/publication-interface';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {AuthService} from '../../services/auth/auth.service';
+import {Comentary} from '../../interfaces/comentary';
+import {FormControl} from '@angular/forms';
+import {ComentariesService} from '../../services/comentaries/comentaries.service';
+import {Publication} from '../../classes/publication';
 
 @Component({
   selector: 'app-publications',
@@ -8,36 +13,70 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./publications.component.css']
 })
 export class PublicationsComponent implements OnInit {
+
   buscador: boolean;
   alll: boolean;
-  id: string;
-  user_id: string;
+  id: number;
+  // tslint:disable-next-line:variable-name
+  user_id: number;
   title: string;
   content: string;
 
+  selectedPublication: Publication = new Publication();
+
+  @Output() details = new EventEmitter<Publication>();
+
+  commentary: Comentary =
+    {
+      id: 0,
+      title: 'Title',
+      content: '',
+      publication_id: 0,
+      user_id: 0,
+    };
+  status = true;
+  formComment = new FormControl('');
   publicaciones: PublicationInterface = {
-    id: '',
-    user_id: '',
+    id: 0,
+    user_id: 0,
     title: '',
     content: ''
   };
   arrayByID: Array<PublicationInterface>;
   arrayByTitle: Array<PublicationInterface>;
-  arrayPublicaciones: Array<PublicationInterface>;
+  arrayPublicaciones: Array<Publication>;
 
-  constructor(private publicationService: PublicationService) {
+  constructor(private commentaryService: ComentariesService, private publicationService: PublicationService, private auth: AuthService) {
   }
 
   ngOnInit(): void {
+    this.auth.getUserDetails().subscribe(data => {
+      this.user_id = data.id;
+      this.commentary.user_id = data.id;
+    });
+    this.getAll();
+  }
+
+  openData(publication: Publication): void {
+    this.details.emit(publication);
+  }
+
+  selectedPub(publication: Publication): void {
+    this.selectedPublication = publication;
+  }
+
+  getAll(): void {
     this.publicationService.getAllPosts().subscribe(all => {
       this.arrayPublicaciones = all;
+      console.log(this.arrayPublicaciones);
     }, error => {
       console.error(error);
     });
+  }
 
-    this.publicationService.getUserID().subscribe(idGet => {
-      this.user_id = idGet;
-    });
+  editPublication(id): boolean {
+    // tslint:disable-next-line:triple-equals
+    return this.user_id == id;
   }
 
   getPostID(): void {
@@ -71,49 +110,31 @@ export class PublicationsComponent implements OnInit {
   }
 
   addNewPost(): void {
-    const newPublicacion = {
-      user_id: this.user_id,
-      title: this.title,
-      content: this.content
-    };
-    this.publicationService.addNewtPost(newPublicacion).subscribe((nuevo) => {
+    this.selectedPublication.user_id = this.user_id;
+    this.publicationService.addNewtPost(this.selectedPublication).subscribe((nuevo) => {
       console.log(nuevo);
     });
+    this.selectedPublication = new Publication();
+    this.getAll();
   }
 
   upTitlePost(): void {
-    const upTitle = {
-      id: this.id,
-      user_id: this.user_id,
-      title: this.title,
-      content: this.content
-    };
-    this.publicationService.upTitlePost(upTitle).subscribe(nuevo => {
+    this.publicationService.upTitlePost(this.selectedPublication).subscribe(nuevo => {
       console.log(nuevo);
     });
   }
 
   upContentPost(): void {
-    const upContent = {
-      id: this.id,
-      user_id: this.user_id,
-      title: this.title,
-      content: this.content
-    };
-    this.publicationService.upContentPost(upContent).subscribe(nuevo => {
+    this.publicationService.upContentPost(this.selectedPublication).subscribe(nuevo => {
       console.log(nuevo);
     });
   }
 
-  deletePost(): void {
-    const deleteContent = {
-      id: this.id,
-      user_id: this.user_id,
-      title: this.title,
-      content: this.content
-    };
-    this.publicationService.deletePost(deleteContent).subscribe((borrado) => {
+  deletePost(publication: Publication): void {
+    this.publicationService.deletePost(publication).subscribe((borrado) => {
       console.log(borrado);
     });
+    this.arrayPublicaciones = this.arrayPublicaciones.filter(x => x !== publication);
   }
+
 }

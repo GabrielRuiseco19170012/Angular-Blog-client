@@ -24,15 +24,14 @@
                       <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                               data-bs-target="#modalUsername">Edit
                       </button>
-
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <label for="username">First Name</label>
+                    <label for="fn">First Name</label>
                     <div class="input-group mb-3 form-group">
-                      <input id="username" class="form-control form-control-lg" type="text" [(ngModel)]="details.first_name"
+                      <input id="fn" class="form-control form-control-lg" type="text" [(ngModel)]="details.first_name"
                              aria-label=".form-control-lg example" readonly name="username">
                       <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                               data-bs-target="#modalFirstName">Edit
@@ -43,9 +42,9 @@
                 </tr>
                 <tr>
                   <td>
-                    <label for="username">Last Name</label>
+                    <label for="ln">Last Name</label>
                     <div class="input-group mb-3 form-group">
-                      <input id="username" class="form-control form-control-lg" type="text" [(ngModel)]="details.last_name"
+                      <input id="ln" class="form-control form-control-lg" type="text" [(ngModel)]="details.last_name"
                              aria-label=".form-control-lg example" readonly name="username">
                       <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                               data-bs-target="#modalLastName">Edit
@@ -56,9 +55,9 @@
                 </tr>
                 <tr>
                   <td>
-                    <label for="username">Email</label>
+                    <label for="em">Email</label>
                     <div class="input-group mb-3 form-group">
-                      <input id="username" class="form-control form-control-lg" type="text" [(ngModel)]="details.email"
+                      <input id="em" class="form-control form-control-lg" type="text" [(ngModel)]="details.email"
                              aria-label=".form-control-lg example" readonly name="username">
                       <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                               data-bs-target="#modalEmail">Edit
@@ -87,7 +86,7 @@
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-light">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit User Name</h5>
+        <h5 class="modal-title" id="ModalLabel1">Edit User Name</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -107,7 +106,7 @@
     <div class="modal-dialog">
       <div class="modal-content bg-dark text-light">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit First Name</h5>
+          <h5 class="modal-title" id="ModalLabel2">Edit First Name</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -127,7 +126,7 @@
     <div class="modal-dialog">
       <div class="modal-content bg-dark text-light">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Last Name</h5>
+          <h5 class="modal-title" id="ModalLabel3">Edit Last Name</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -143,12 +142,12 @@
 </div>
 
 
-<!-- Modal Email -->
+<!-- Modal email -->
 <div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="modalUsername" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content bg-dark text-light">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Email</h5>
+          <h5 class="modal-title" id="ModalLabel4">Edit Email</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

@@ -7,16 +7,17 @@ import {ProfileComponent} from '../components/profile/profile.component';
 import {Page404Component} from '../components/wildcards/page404/page404.component';
 import {AuthGuardService} from '../services/auth-guard/auth-guard.service';
 import {ComentariesComponent} from '../components/comentaries/comentaries.component';
+import {BlogComponent} from '../components/blog/blog.component';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
-  {path: 'blog', component: PublicationsComponent, canActivate: [AuthGuardService]},
-  {path: 'comentaries', component: ComentariesComponent, canActivate: [AuthGuardService]},
+  {path: 'blog', component: BlogComponent, canActivate: [AuthGuardService]},
+  // {path: 'comentaries', component: ComentariesComponent, canActivate: [AuthGuardService]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
-  {path: 'publication', component: PublicationsComponent, canActivate: [AuthGuardService]},
+  // {path: 'publication', component: PublicationsComponent, canActivate: [AuthGuardService]},
   {path: '**', pathMatch: 'full', component: Page404Component}
 ];
 
