@@ -28,8 +28,7 @@ export class PublicationsComponent implements OnInit {
 
   // importante
   selectedPublication: Publication = new Publication();
- //
-
+  //
   @Output() details = new EventEmitter<Publication>();
 
   commentary: Comentary =
@@ -48,7 +47,7 @@ export class PublicationsComponent implements OnInit {
     title: '',
     content: ''
   };
-  arrayByID: Array<PublicationInterface>;
+
   arrayByTitle: Array<PublicationInterface>;
   arrayPublicaciones: Array<Publication>;
 
@@ -83,20 +82,6 @@ export class PublicationsComponent implements OnInit {
   editPublication(id): boolean {
     // tslint:disable-next-line:triple-equals
     return this.user_id == id;
-  }
-
-  getPostID(): void {
-    const byID = {
-      id: this.id,
-      user_id: this.user_id,
-      title: this.title,
-      content: this.content
-    };
-    this.publicationService.getPostID(byID).subscribe(id => {
-      this.arrayByID = id;
-    }, title => {
-      console.log(title);
-    });
   }
 
   getPostTitle(): void {
