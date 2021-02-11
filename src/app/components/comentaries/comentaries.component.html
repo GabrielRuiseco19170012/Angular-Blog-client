@@ -1,4 +1,4 @@
-<div *ngIf="details" class="mb-4">
+<div *ngIf="details.id > 0" class="mb-4">
   <button class="btn btn-block btn-secondary" (click)="status=!status" *ngIf="status">Mostrar detalles</button>
   <button class="btn btn-block btn-secondary" (click)="status=!status; statusCom=false" *ngIf="!status">Ocultar detalles</button>
 </div>
@@ -6,6 +6,12 @@
   <div class="card" [@openClose]="this.status? 'close':'open'">
     <div class="card-title mt-2 text-center">
       <h3>Detalles</h3>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col text-right text-dark mr-3" *ngIf="comment.user_id==details.user_id">
+        <a class="text-dark" type="button" data-toggle="modal"
+           data-target="#actualizarPub">Editar</a>
+      </div>
     </div>
     <div class="card-body" *ngIf="!status">
       <ul *ngIf="details" class="list-group">
@@ -36,6 +42,13 @@
         <div *ngFor="let com of comms" >
           <ul *ngIf="details" class="list-group">
             <li class="list-group-item list-group-item-action">
+              <div class="row justify-content-end">
+                <div class="col text-right text-dark" *ngIf="comment.user_id==com.user_id">
+                  <a class="text-dark" type="button" (click)="comment = com" data-toggle="modal"
+                     data-target="#actualizarComment">Editar</a> |
+                  <a class="text-dark" type="button" (click)="deleteCommentary(com.id)">Eliminar</a>
+                </div>
+              </div>
               <div class="row">
                 <div class="col">Titulo: {{com.title}}</div>
               </div>
@@ -82,6 +95,62 @@
 </div>
 
 
+<!--actualizar comentario entera-->
+<div class="modal fade" id="actualizarComment" tabindex="-1" aria-labelledby="actualizarPubLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actualizarPubLabel">Actualizando Comentario.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
 
+        <label for="newPub">Titulo</label><input type="text" name="newTit" class="form-control"
+                                                 [(ngModel)]="comment.title"
+                                                 placeholder="Nuevo Titulo">
+        <br>
+        <label for="newContent">Contenido</label><input type="text" class="form-control" name="content"
+                                                        [(ngModel)]="comment.content"
+                                                        placeholder="Nuevo Contenido">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-warning" (click)="updateCommentary()" data-dismiss="modal">Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!--actualizar publicacion entera-->
+<div class="modal fade" id="actualizarPub" tabindex="-1" aria-labelledby="actualizarPubLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actualizarPubLabel">Actualizando Publicación.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
 
+        <label for="newPub">Titulo</label><input type="text" id="newPub" name="newTit" class="form-control"
+                                                 [(ngModel)]="details.title"
+                                                 placeholder="Nuevo Titulo">
+        <br>
+        <label for="newContent">Contenido</label><input type="text" class="form-control" id="newContent" name="content"
+                                                        [(ngModel)]="details.content"
+                                                        placeholder="Nuevo Contenido">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-warning" (click)="upTitlePost()" data-dismiss="modal">Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

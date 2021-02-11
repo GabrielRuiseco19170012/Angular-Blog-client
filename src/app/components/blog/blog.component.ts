@@ -16,7 +16,7 @@ export class BlogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sendData(details: Publication): void {
+  setData(details: Publication): void {
     this.data = details;
   }
 }

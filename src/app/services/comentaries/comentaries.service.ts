@@ -21,12 +21,16 @@ export class ComentariesService {
   }
 
 
-  getCommentaryByPub(id): Observable<any> {
+  getCommentaryByPub(id: number): Observable<any> {
     return this.http.get(`${environment.apiRoutes}show/publication/comments?id=${id}`);
   }
 
-  deleteCommentary(): Observable<any> {
-    return this.http.delete(`${environment.apiRoutes}delete/commentary`);
+  deleteCommentary(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiRoutes}delete/commentary?id=${id}`);
+  }
+
+  updateCommentary(commentary: Comentary){
+    return this.http.put(`${environment.apiRoutes}update/comment`,commentary)
   }
 
 }
