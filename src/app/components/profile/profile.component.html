@@ -19,11 +19,14 @@
                   <td>
                     <label for="username">Username</label>
                     <div class="input-group mb-3 form-group">
-                      <input id="username" class="form-control form-control-lg" type="text" [(ngModel)]="details.username"
+                      <input id="username" class="form-control form-control-lg" type="text"
+                             [(ngModel)]="details.username"
                              aria-label=".form-control-lg example" readonly name="username">
-                      <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                              data-bs-target="#modalUsername">Edit
-                      </button>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                                data-bs-target="#modalUsername">Edit
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -33,12 +36,13 @@
                     <div class="input-group mb-3 form-group">
                       <input id="fn" class="form-control form-control-lg" type="text" [(ngModel)]="details.first_name"
                              aria-label=".form-control-lg example" readonly name="username">
-                      <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                              data-bs-target="#modalFirstName">Edit
-                      </button>
-
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                                data-bs-target="#modalFirstName">Edit
+                        </button>
+                      </div>
                     </div>
-                </td>
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -46,10 +50,11 @@
                     <div class="input-group mb-3 form-group">
                       <input id="ln" class="form-control form-control-lg" type="text" [(ngModel)]="details.last_name"
                              aria-label=".form-control-lg example" readonly name="username">
-                      <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                              data-bs-target="#modalLastName">Edit
-                      </button>
-
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                                data-bs-target="#modalLastName">Edit
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -59,10 +64,11 @@
                     <div class="input-group mb-3 form-group">
                       <input id="em" class="form-control form-control-lg" type="text" [(ngModel)]="details.email"
                              aria-label=".form-control-lg example" readonly name="username">
-                      <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                              data-bs-target="#modalEmail">Edit
-                      </button>
-
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                                data-bs-target="#modalEmail">Edit
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -94,7 +100,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline-light" (click)="updateUsername()" data-bs-dismiss="modal">Save changes
+        <button type="button" class="btn btn-outline-light" (click)="updateUsername()" data-bs-dismiss="modal">Save
+          changes
         </button>
       </div>
     </div>
@@ -103,61 +110,63 @@
 
 <!-- Modal First Name -->
 <div class="modal fade" id="modalFirstName" tabindex="-1" aria-labelledby="modalUsername" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content bg-dark text-light">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel2">Edit First Name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control" placeholder="First Name" [formControl]="formFirstName">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-light" (click)="updateFirstName()" data-bs-dismiss="modal">Save changes
-          </button>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel2">Edit First Name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" placeholder="First Name" [formControl]="formFirstName">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-light" (click)="updateFirstName()" data-bs-dismiss="modal">Save
+          changes
+        </button>
       </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal Last Name -->
 <div class="modal fade" id="modalLastName" tabindex="-1" aria-labelledby="modalUsername" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content bg-dark text-light">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel3">Edit Last Name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control" placeholder="Last Name" [formControl]="formLastName">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-light" (click)="updateLastName()" data-bs-dismiss="modal">Save changes
-          </button>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel3">Edit Last Name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" placeholder="Last Name" [formControl]="formLastName">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-light" (click)="updateLastName()" data-bs-dismiss="modal">Save
+          changes
+        </button>
       </div>
     </div>
+  </div>
 </div>
 
 
 <!-- Modal email -->
 <div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="modalUsername" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content bg-dark text-light">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel4">Edit Email</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control" placeholder="Email" [formControl]="formEmail">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-light" (click)="updateEmail()" data-bs-dismiss="modal">Save changes
-          </button>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel4">Edit Email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" placeholder="Email" [formControl]="formEmail">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-light" (click)="updateEmail()" data-bs-dismiss="modal">Save changes
+        </button>
       </div>
     </div>
+  </div>
 </div>

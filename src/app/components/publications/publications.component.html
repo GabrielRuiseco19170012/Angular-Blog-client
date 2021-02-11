@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-6 col-11">
     <div class="card bg-secondary">
       <div class="card-body">
         <h4 class="mt-3" style="color: white; text-align: center;">Bienvenido, ¿Tienes algo que aportar? ¡Adelante crea
@@ -21,7 +21,7 @@
       </button>
       <button (click)="status=!status" class="btn btn-block btn-secondary" *ngIf="status">Ocultar Publicaciones</button>
     </div>
-    <div class="row justify-content-center mt-5" style="height: 21vh">
+    <div class="row justify-content-center mb-5 mt-5" style="height: 21vh">
       <div class="col text-center">
         <h4 style="text-align: center; color: white;">¿No encuentras lo que buscas? !Buscalo por su nombre¡</h4>
         <button style="width: 15rem;" type="button" class="btn btn-primary mt-2" data-toggle="modal"
@@ -30,31 +30,80 @@
         </button>
       </div>
     </div>
+
+    <div *ngIf="buscador==true">
+      <div class="card bg-secondary mb-5">
+        <div class="row justify-content-end">
+          <div class="col">
+            <button (click)="buscador=false" type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times; </span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row justify-content-center">
+            <label style="font-size: 1.3em" class="text-light mb-2">Resultados de busqueda</label>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col m-2">
+              <div *ngFor="let tit of arrayByTitle">
+                <div class="row justify-content-between">
+                  <div class="col">
+                    <label class="text-light">Titulo</label>
+                  </div>
+                  <div class="col text-right text-light" *ngIf="tit.user_id==user_id">
+                    <a class="text-light" type="button" style="text-decoration: none" (click)="selectedPub(tit)"
+                       data-toggle="modal"
+                       data-target="#actualizarPub">Editar</a> |
+                    <a class="text-light" type="button" (click)="deletePost(tit); buscador=false">Eliminar</a>
+                  </div>
+                </div>
+                <div class="input-group mb-3 form-group">
+                  <input (click)="openData(tit)"
+                         class="form-pretty form-control text-light bg-secondary"
+                         type="text" [(ngModel)]="tit.title" aria-label=".form-control-lg example"
+                         readonly name="username">
+                </div>
+                <label class="text-light">Contenido</label>
+                <div class="input-group mb-3 form-group">
+                  <input (click)="openData(tit)"
+                         class="form-pretty form-control  text-light bg-secondary"
+                         type="text" [(ngModel)]="tit.content" aria-label=".form-control-lg example"
+                         readonly name="username">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-md-6">
-    <div class="card bg-secondary" *ngIf="status">
-      <div class="card-title mt-2 text-light text-center">
-        <h3>Lista</h3>
+
+
+  <div class="col-md-6 col-11">
+    <div class="card bg-secondary" [@openClose]="this.status? 'open':'close'">
+      <div class="card-title mt-4 text-light text-center">
+        <h3>Publicaciones</h3>
       </div>
       <div class="card-body">
-        <ul class="list-group">
+        <ul class="list-group" *ngIf="status">
           <li *ngFor="let publication of arrayPublicaciones"
-              class="list-group-item bg-secondary list-group-item-action"
-              [class.active]="publication == selectedPublication">
-            <label class="text-light">Titulo</label>
+              class="list-group-item bg-secondary list-group-item-action">
+            <div class="row justify-content-between">
+              <div class="col">
+                <label class="text-light">Titulo</label>
+              </div>
+              <div class="col text-right text-light" *ngIf="publication.user_id==user_id">
+                <a class="text-light" type="button" (click)="selectedPub(publication)" data-toggle="modal"
+                   data-target="#actualizarPub">Editar</a> |
+                <a class="text-light" type="button" (click)="deletePost(publication)">Eliminar</a>
+              </div>
+            </div>
             <div class="input-group mb-3 form-group">
-              <input (click)="openData(publication)" class="form-control form-control-lg text-light bg-secondary"
+              <input (click)="openData(publication)"
+                     class="form-pretty form-control form-control-lg text-light bg-secondary"
                      type="text" [(ngModel)]="publication.title" aria-label=".form-control-lg example"
                      readonly name="username">
-              <div class="input-group-append">
-                <button (click)="selectedPub(publication)" type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                        data-target="#actualizarTitulo">
-                  Editar
-                </button>
-                <button class="btn btn-danger" (click)="deletePost(publication)">
-                  Eliminar
-                </button>
-              </div>
             </div>
           </li>
         </ul>
@@ -63,29 +112,6 @@
   </div>
 </div>
 
-
-<div class="row justify-content-center">
-  <div class="col-md-8 mt-4 ml-4">
-    <div *ngIf="buscador==true">
-      <div *ngFor="let tit of arrayByTitle">
-        <div class="input-group mb-3">
-          <h4 style="color: white; text-align: center;">{{tit.title}}</h4>
-          <button (click)="selectedPub(tit)" type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                  data-target="#actualizarTitulo">
-            Editar
-          </button>
-        </div>
-        <div class="input-group mb-3">
-          <h6 style="color: white;">{{tit.content}}</h6>
-          <button (click)="selectedPub(tit)" type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                  data-target="#actualizarContenido">
-            Editar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div>
   <div class="modal fade" id="ModalSelectTitulo" tabindex="-1" aria-labelledby="ModalSelectTituloLabel"
@@ -170,14 +196,44 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="tex" class="form-control" id="title" name="title" [(ngModel)]="selectedPublication.title"
+        <input type="text" class="form-control" id="title" name="title" [(ngModel)]="selectedPublication.title"
                placeholder="Titulo">
-        <input type="tex" class="form-control" id="content" name="content" [(ngModel)]="selectedPublication.content"
+        <input type="text" class="form-control" id="content" name="content" [(ngModel)]="selectedPublication.content"
                placeholder="Contenido">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-success" (click)="addNewPost();" data-dismiss="modal">Crear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--actualizar publicacion entera-->
+<div class="modal fade" id="actualizarPub" tabindex="-1" aria-labelledby="actualizarPubLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actualizarPubLabel">Actualizando Titulo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <label for="newPub">Titulo</label><input type="text" id="newPub" name="newTit" class="form-control"
+                                                 [(ngModel)]="selectedPublication.title"
+                                                 placeholder="Nuevo Titulo">
+        <br>
+        <label for="newContent">Contenido</label><input type="text" class="form-control" id="newContent" name="content"
+                                                        [(ngModel)]="selectedPublication.content"
+                                                        placeholder="Nuevo Contenido">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-warning" (click)="upTitlePost()" data-dismiss="modal">Actualizar
         </button>
       </div>
     </div>

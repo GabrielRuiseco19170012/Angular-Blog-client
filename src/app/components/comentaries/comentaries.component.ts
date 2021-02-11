@@ -1,26 +1,30 @@
-import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {ComentariesService} from '../../services/comentaries/comentaries.service';
-import {Comentary} from '../../interfaces/comentary';
 import {FormControl} from '@angular/forms';
 import {AuthService} from '../../services/auth/auth.service';
 import {PublicationInterface} from '../../interfaces/publication-interface';
 import {Publication} from '../../classes/publication';
 import {Commentary} from '../../classes/comment';
+import {openClose, showHide} from '../../animations/open-close';
 
 @Component({
   selector: 'app-comentaries',
   templateUrl: './comentaries.component.html',
-  styleUrls: ['./comentaries.component.css']
+  styleUrls: ['./comentaries.component.css'],
+  animations: [
+    openClose,
+    showHide
+  ]
 })
-export class ComentariesComponent implements OnInit {
-  //
-  // @HostBinding('class') classes = 'row';
+export class ComentariesComponent implements OnInit, OnChanges {
+
   @Input() data: Array<PublicationInterface>;
   @Input() details: Publication;
 
   comment: Commentary = new Commentary();
 
   status = true;
+  statusCom = false;
   formComment = new FormControl('');
 
   comms: Array<Commentary>;
@@ -33,6 +37,13 @@ export class ComentariesComponent implements OnInit {
       this.comment.user_id = data.id;
     });
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.details.currentValue !== changes.details.previousValue) {
+      this.getCommentariesByP();
+    }
+  }
+
 
   getCommentariesByP(): void {
     this.commentaryService.getCommentaryByPub(this.details.id).subscribe(data => {
@@ -49,10 +60,11 @@ export class ComentariesComponent implements OnInit {
     this.commentaryService.createCommentary(this.comment).subscribe(
       resp => {
         console.log(resp);
+
+        this.getCommentariesByP();
       },
       err => console.log(err)
     );
-    this.getCommentariesByP();
   }
 
   getAllCommentaries(): void {

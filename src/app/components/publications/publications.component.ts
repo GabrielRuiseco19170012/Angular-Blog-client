@@ -6,11 +6,15 @@ import {Comentary} from '../../interfaces/comentary';
 import {FormControl} from '@angular/forms';
 import {ComentariesService} from '../../services/comentaries/comentaries.service';
 import {Publication} from '../../classes/publication';
+import {openClose} from '../../animations/open-close';
 
 @Component({
   selector: 'app-publications',
   templateUrl: './publications.component.html',
-  styleUrls: ['./publications.component.css']
+  styleUrls: ['./publications.component.css'],
+  animations: [
+    openClose
+  ]
 })
 export class PublicationsComponent implements OnInit {
 
@@ -22,7 +26,9 @@ export class PublicationsComponent implements OnInit {
   title: string;
   content: string;
 
+  // importante
   selectedPublication: Publication = new Publication();
+ //
 
   @Output() details = new EventEmitter<Publication>();
 
@@ -113,9 +119,9 @@ export class PublicationsComponent implements OnInit {
     this.selectedPublication.user_id = this.user_id;
     this.publicationService.addNewtPost(this.selectedPublication).subscribe((nuevo) => {
       console.log(nuevo);
+      this.getAll();
     });
     this.selectedPublication = new Publication();
-    this.getAll();
   }
 
   upTitlePost(): void {
@@ -133,8 +139,8 @@ export class PublicationsComponent implements OnInit {
   deletePost(publication: Publication): void {
     this.publicationService.deletePost(publication).subscribe((borrado) => {
       console.log(borrado);
+      this.arrayPublicaciones = this.arrayPublicaciones.filter(x => x !== publication);
     });
-    this.arrayPublicaciones = this.arrayPublicaciones.filter(x => x !== publication);
   }
 
 }

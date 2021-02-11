@@ -5,3 +5,13 @@
 h1{
   font-family: Bahnschrift;
 }
+
+.form-pretty{
+  background-color: transparent;
+  border: 1px solid #e3e3e3;
+  border-radius: 30px;
+  color: #ffffff;
+  line-height: normal;
+  font-size: 1.2em;
+  box-shadow: none;
+}

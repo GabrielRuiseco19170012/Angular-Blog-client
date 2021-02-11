@@ -6,7 +6,7 @@
           <h1 class="text-center mt-3 mb-5">LOGIN</h1>
           <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
             <div class="form-group mb-3">
-              <input type="text" placeholder="Email" class="form-control" formControlName="email"
+              <input type="text" placeholder="Email" class="form-control form-pretty" formControlName="email"
                      [ngClass]="{'is-invalid': form.get('email').touched && form.get('email').invalid}">
               <div *ngIf="form.get('email').touched && form.get('email').invalid" class="invalid-feedback">
                 <div *ngIf="form.get('email').errors.required">Email is required</div>
@@ -14,7 +14,7 @@
               </div>
             </div>
             <div class="form-group mb-5">
-              <input type="password" placeholder="Password" class="form-control" formControlName="password"
+              <input type="password" placeholder="Password" class="form-control form-pretty" formControlName="password"
                      [ngClass]="{'is-invalid': form.get('password').touched && form.get('password').invalid}">
               <div *ngIf="form.get('password').touched && form.get('password').invalid" class="invalid-feedback">
                 <div *ngIf="form.get('password').errors.required">Password is required</div>
