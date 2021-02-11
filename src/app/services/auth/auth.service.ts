@@ -35,6 +35,10 @@ export class AuthService {
     return this.http.get(environment.serverRoutes + 'loggedIn');
   }
 
+  public getUser(id): Observable<any> {
+    return this.http.get(environment.serverRoutes + `getUser/${id}`);
+  }
+
   public isLoggedIn(): Observable<any> {
     return this.http.get(environment.serverRoutes + 'loginCheck');
   }

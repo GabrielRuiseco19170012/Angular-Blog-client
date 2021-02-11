@@ -20,7 +20,7 @@
             <div class="col">Titulo: {{details.title}}</div>
           </div>
         </li>
-        <li class="list-group-item list-group-item-action">
+        <li class="list-group-item">
           <div class="row">
             <div class="col" style="overflow-y: scroll; height: 20vh">Contenido: {{details.content}}</div>
           </div>
@@ -42,7 +42,8 @@
         <div *ngFor="let com of comms" >
           <ul *ngIf="details" class="list-group">
             <li class="list-group-item list-group-item-action">
-              <div class="row justify-content-end">
+              <div class="row justify-content-between" style="font-size: 0.7em">
+                <div class="col ml-0"><label>{{com.username}}</label></div>
                 <div class="col text-right text-dark" *ngIf="comment.user_id==com.user_id">
                   <a class="text-dark" type="button" (click)="comment = com" data-toggle="modal"
                      data-target="#actualizarComment">Editar</a> |
@@ -101,7 +102,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="actualizarPubLabel">Actualizando Comentario.</h5>
+        <h5 class="modal-title" id="actualizarComLabel">Actualizando Comentario.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

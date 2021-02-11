@@ -23,6 +23,7 @@ export class PublicationsComponent implements OnInit {
   id: number;
   // tslint:disable-next-line:variable-name
   user_id: number;
+  username: string;
   title: string;
   content: string;
 
@@ -30,8 +31,6 @@ export class PublicationsComponent implements OnInit {
   selectedPublication: Publication = new Publication();
   //
   @Output() details = new EventEmitter<Publication>();
-
-  
 
   commentary: Comentary =
     {
@@ -50,7 +49,7 @@ export class PublicationsComponent implements OnInit {
     content: ''
   };
 
-  arrayByTitle: Array<PublicationInterface>;
+  arrayByTitle: Array<Publication>;
   arrayPublicaciones: Array<Publication>;
 
   constructor(private commentaryService: ComentariesService, private publicationService: PublicationService, private auth: AuthService) {
@@ -59,6 +58,7 @@ export class PublicationsComponent implements OnInit {
   ngOnInit(): void {
     this.auth.getUserDetails().subscribe(data => {
       this.user_id = data.id;
+      this.username = data.username;
       this.commentary.user_id = data.id;
     });
     this.getAll();
@@ -73,12 +73,17 @@ export class PublicationsComponent implements OnInit {
   }
 
   getAll(): void {
-    this.publicationService.getAllPosts().subscribe(all => {
-      this.arrayPublicaciones = all;
-      console.log(this.arrayPublicaciones);
-    }, error => {
-      console.error(error);
-    });
+    this.publicationService.getAllPosts().subscribe(data => {
+        for (const element of data) {
+          this.auth.getUser(element.user_id).subscribe(d => {
+            element.username = d.username;
+            this.arrayPublicaciones = data;
+            console.log(this.arrayPublicaciones);
+          });
+        }
+      },
+      err => console.log(err)
+    );
   }
 
   editPublication(id): boolean {
@@ -95,8 +100,14 @@ export class PublicationsComponent implements OnInit {
     };
     this.buscador = true;
     this.alll = false;
-    this.publicationService.getPostTitle(byTitle).subscribe(title => {
-      this.arrayByTitle = title;
+    this.publicationService.getPostTitle(byTitle).subscribe(data => {
+      for (const element of data) {
+        this.auth.getUser(element.user_id).subscribe(d => {
+          element.username = d.username;
+          this.arrayByTitle = data;
+          console.log(this.arrayPublicaciones);
+        });
+      }
     }, title => {
       console.log(title);
     });

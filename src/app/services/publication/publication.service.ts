@@ -3,6 +3,7 @@ import {PublicationInterface} from '../../interfaces/publication-interface';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {Publication} from '../../classes/publication';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class PublicationService {
     return this.Http.put<PublicationInterface>(path, publicacion);
   }
 
-  public deletePost(publicacion: PublicationInterface): Observable<any> {
+  public deletePost(publicacion: Publication): Observable<any> {
     const path = environment.apiRoutes + `delete/publication?id=${publicacion.id}`;
     return this.Http.delete(path);
   }

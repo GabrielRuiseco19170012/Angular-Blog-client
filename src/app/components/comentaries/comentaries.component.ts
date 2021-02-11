@@ -6,7 +6,7 @@ import {PublicationInterface} from '../../interfaces/publication-interface';
 import {Publication} from '../../classes/publication';
 import {Commentary} from '../../classes/comment';
 import {openClose, showHide} from '../../animations/open-close';
-import { PublicationService } from 'src/app/services/publication/publication.service';
+import {PublicationService} from 'src/app/services/publication/publication.service';
 
 @Component({
   selector: 'app-comentaries',
@@ -28,7 +28,7 @@ export class ComentariesComponent implements OnInit, OnChanges {
   statusCom = false;
   formComment = new FormControl('');
 
-  comms: Array<Commentary>;
+  comms: Array<Commentary> = [];
 
   constructor(private commentaryService: ComentariesService, private auth: AuthService, private publicationService: PublicationService) {
   }
@@ -36,13 +36,15 @@ export class ComentariesComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.auth.getUserDetails().subscribe(data => {
       this.comment.user_id = data.id;
+      this.comment.username = data.username;
     });
     this.details = {
       id: 0,
       user_id: 0,
+      username: '',
       title: '',
       content: ''
-    }
+    };
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -54,8 +56,14 @@ export class ComentariesComponent implements OnInit, OnChanges {
 
   getCommentariesByP(): void {
     this.commentaryService.getCommentaryByPub(this.details.id).subscribe(data => {
-        this.comms = data;
-        console.log(data);
+        for (const element of data) {
+          this.auth.getUser(element.user_id).subscribe(d => {
+            element.username = d.username;
+            console.log(element);
+            this.comms = data;
+          });
+        }
+        console.log(this.comms);
       },
       err => console.log(err)
     );
@@ -80,22 +88,21 @@ export class ComentariesComponent implements OnInit, OnChanges {
         this.comms = res;
         console.log(this.comms);
       },
-      erro => console.log(erro)
+      error => console.log(error)
     );
   }
 
-  deleteCommentary(id: number): void{
-    this.commentaryService.deleteCommentary(id).subscribe(message =>{
-      this.comms = this.comms.filter(x => x.id != id)
-      console.log(message)
-
-    })
+  deleteCommentary(id: number): void {
+    this.commentaryService.deleteCommentary(id).subscribe(message => {
+      this.comms = this.comms.filter(x => x.id !== id);
+      console.log(message);
+    });
   }
 
-  updateCommentary(): void{
-    this.commentaryService.updateCommentary(this.comment).subscribe(msg =>{
-      console.log(msg)
-    })
+  updateCommentary(): void {
+    this.commentaryService.updateCommentary(this.comment).subscribe(msg => {
+      console.log(msg);
+    });
   }
 
 
@@ -104,7 +111,6 @@ export class ComentariesComponent implements OnInit, OnChanges {
       console.log(nuevo);
     });
   }
-
 
 
 }
