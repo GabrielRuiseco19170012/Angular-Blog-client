@@ -31,6 +31,8 @@ export class PublicationsComponent implements OnInit {
   //
   @Output() details = new EventEmitter<Publication>();
 
+  
+
   commentary: Comentary =
     {
       id: 0,

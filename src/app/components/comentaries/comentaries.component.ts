@@ -6,6 +6,7 @@ import {PublicationInterface} from '../../interfaces/publication-interface';
 import {Publication} from '../../classes/publication';
 import {Commentary} from '../../classes/comment';
 import {openClose, showHide} from '../../animations/open-close';
+import { PublicationService } from 'src/app/services/publication/publication.service';
 
 @Component({
   selector: 'app-comentaries',
@@ -29,13 +30,19 @@ export class ComentariesComponent implements OnInit, OnChanges {
 
   comms: Array<Commentary>;
 
-  constructor(private commentaryService: ComentariesService, private auth: AuthService) {
+  constructor(private commentaryService: ComentariesService, private auth: AuthService, private publicationService: PublicationService) {
   }
 
   ngOnInit(): void {
     this.auth.getUserDetails().subscribe(data => {
       this.comment.user_id = data.id;
     });
+    this.details = {
+      id: 0,
+      user_id: 0,
+      title: '',
+      content: ''
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,4 +83,28 @@ export class ComentariesComponent implements OnInit, OnChanges {
       erro => console.log(erro)
     );
   }
+
+  deleteCommentary(id: number): void{
+    this.commentaryService.deleteCommentary(id).subscribe(message =>{
+      this.comms = this.comms.filter(x => x.id != id)
+      console.log(message)
+
+    })
+  }
+
+  updateCommentary(): void{
+    this.commentaryService.updateCommentary(this.comment).subscribe(msg =>{
+      console.log(msg)
+    })
+  }
+
+
+  upTitlePost(): void {
+    this.publicationService.upTitlePost(this.details).subscribe(nuevo => {
+      console.log(nuevo);
+    });
+  }
+
+
+
 }

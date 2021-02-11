@@ -52,9 +52,6 @@
                     <label class="text-light">Titulo</label>
                   </div>
                   <div class="col text-right text-light" *ngIf="tit.user_id==user_id">
-                    <a class="text-light" type="button" style="text-decoration: none" (click)="selectedPub(tit)"
-                       data-toggle="modal"
-                       data-target="#actualizarPub">Editar</a> |
                     <a class="text-light" type="button" (click)="deletePost(tit); buscador=false">Eliminar</a>
                   </div>
                 </div>
@@ -94,8 +91,7 @@
                 <label class="text-light">Titulo</label>
               </div>
               <div class="col text-right text-light" *ngIf="publication.user_id==user_id">
-                <a class="text-light" type="button" (click)="selectedPub(publication)" data-toggle="modal"
-                   data-target="#actualizarPub">Editar</a> |
+                
                 <a class="text-light" type="button" (click)="deletePost(publication)">Eliminar</a>
               </div>
             </div>
@@ -210,32 +206,4 @@
   </div>
 </div>
 
-<!--actualizar publicacion entera-->
-<div class="modal fade" id="actualizarPub" tabindex="-1" aria-labelledby="actualizarPubLabel"
-     aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="actualizarPubLabel">Actualizando Titulo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
 
-        <label for="newPub">Titulo</label><input type="text" id="newPub" name="newTit" class="form-control"
-                                                 [(ngModel)]="selectedPublication.title"
-                                                 placeholder="Nuevo Titulo">
-        <br>
-        <label for="newContent">Contenido</label><input type="text" class="form-control" id="newContent" name="content"
-                                                        [(ngModel)]="selectedPublication.content"
-                                                        placeholder="Nuevo Contenido">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-warning" (click)="upTitlePost()" data-dismiss="modal">Actualizar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
