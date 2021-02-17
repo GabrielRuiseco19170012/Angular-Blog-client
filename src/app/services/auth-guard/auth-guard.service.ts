@@ -13,7 +13,7 @@ export class AuthGuardService {
   }
 
   async canActivate(): Promise<boolean> {
-    await this.auth.isLoggedIn().subscribe(result => {
+    await this.auth.isLoggedIn().toPromise().then(result => {
       // console.log(result);
       this.res = result;
       // console.log(this.res);

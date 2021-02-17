@@ -22,9 +22,9 @@
             <div class="col">Titulo: {{details.title}}</div>
           </div>
         </li>
-        <li class="list-group-item">
+        <li class="list-group-item" *ngIf="selectedFile">
           <div class="d-flex justify-content-center">
-            <img *ngIf="selectedFile" src="http://127.0.0.1:3333/getImage?id={{details.id}}"
+            <img src="http://127.0.0.1:3333/getImage?id={{details.id}}"
                  style="height: 100px; width: 100px">
           </div>
         </li>
@@ -96,7 +96,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline-light" (click)="savedCommentary()" data-bs-dismiss="modal">Comentar
+        <button type="button" class="btn btn-outline-light" (click)="savedCommentary(); statusCom=!statusCom;" data-bs-dismiss="modal">Comentar
         </button>
       </div>
     </div>

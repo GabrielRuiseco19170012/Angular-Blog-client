@@ -3,10 +3,10 @@ import {PublicationInterface} from '../../interfaces/publication-interface';
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Comentary} from '../../interfaces/comentary';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ComentariesService} from '../../services/comentaries/comentaries.service';
 import {Publication} from '../../classes/publication';
-import {animations} from '../../animations/animations';
+import {openClose} from '../../animations/animations';
 import {ImageService} from '../../services/Image/image.service';
 
 @Component({
@@ -14,7 +14,7 @@ import {ImageService} from '../../services/Image/image.service';
   templateUrl: './publications.component.html',
   styleUrls: ['./publications.component.css'],
   animations: [
-    animations
+    openClose
   ]
 })
 export class PublicationsComponent implements OnInit {
@@ -31,6 +31,11 @@ export class PublicationsComponent implements OnInit {
   selectedPublication: Publication = new Publication();
   selectedFile: File = null;
   @Output() details = new EventEmitter<Publication>();
+
+  form = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    content: new FormControl('', [Validators.required]),
+  });
 
   commentary: Comentary =
     {
@@ -116,16 +121,20 @@ export class PublicationsComponent implements OnInit {
 
   addNewPost(): void {
     this.selectedPublication.user_id = this.user_id;
-    this.publicationService.addNewtPost(this.selectedPublication).subscribe(nuevo => {
-      const formData = new FormData();
-      // console.log(nuevo.id);
-      formData.append('image', this.selectedFile, this.selectedFile.name);
-      this.imageService.saveImage(formData, nuevo.id).subscribe(data => {
-        // console.log(data);
+    if (this.selectedPublication.content && this.selectedPublication.title) {
+      this.publicationService.addNewtPost(this.selectedPublication).subscribe(nuevo => {
+        const formData = new FormData();
+        if (this.selectedFile) {
+          formData.append('image', this.selectedFile, this.selectedFile.name);
+          this.imageService.saveImage(formData, nuevo.id).subscribe(() => {
+            this.selectedFile = null;
+            this.selectedPublication = new Publication();
+          });
+        }
+        this.selectedPublication = new Publication();
+        this.getAll();
       });
-      this.getAll();
-    });
-    this.selectedPublication = new Publication();
+    }
   }
 
   upTitlePost(): void {

@@ -72,7 +72,6 @@ export class AuthService {
       map((data: TokenResponse) => {
         if (data.token) {
           this.cookieService.set('token', data.token);
-          // this.saveToken(data.token);
           this.cookieService.set('refreshToken', data.refreshToken);
         }
       })

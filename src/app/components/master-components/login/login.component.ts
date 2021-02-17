@@ -1,10 +1,10 @@
-import
-{Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserInterface} from '../../../interfaces/UserInterface';
 import {AuthService} from '../../../services/auth/auth.service';
 import {Router} from '@angular/router';
 import {enterLeave} from '../../../animations/animations';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
@@ -33,10 +33,10 @@ export class LoginComponent implements OnInit {
     this.user = this.form.value;
     this.auth.login(this.user).subscribe(
       data => {
-        if (data.token) {
+        if (this.cookieService.check('token')) {
           this.router.navigateByUrl('/profile');
         } else {
-          this.message = data.message;
+          return {message: 'user not found'};
         }
       },
       error => {

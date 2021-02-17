@@ -1,6 +1,6 @@
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
-export const animations = trigger('animations', [
+export const openClose = trigger('openClose', [
   state('open', style({
     opacity: 1
   })),

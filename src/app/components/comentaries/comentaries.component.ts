@@ -5,7 +5,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {PublicationInterface} from '../../interfaces/publication-interface';
 import {Publication} from '../../classes/publication';
 import {Commentary} from '../../classes/comment';
-import {animations, showHide} from '../../animations/animations';
+import {openClose, showHide} from '../../animations/animations';
 import {PublicationService} from 'src/app/services/publication/publication.service';
 import {ImageService} from '../../services/Image/image.service';
 import {Image} from '../../classes/image';
@@ -15,7 +15,7 @@ import {Image} from '../../classes/image';
   templateUrl: './comentaries.component.html',
   styleUrls: ['./comentaries.component.css'],
   animations: [
-    animations,
+    openClose,
     showHide
   ]
 })
@@ -26,7 +26,7 @@ export class ComentariesComponent implements OnInit, OnChanges {
 
   comment: Commentary = new Commentary();
 
-  status = true;
+  status = false;
   statusCom = false;
   formComment = new FormControl('');
 
