@@ -38,8 +38,6 @@ export class ProfileComponent implements OnInit {
   getUserDetails(): void {
     this.auth.getUserDetails().subscribe(data => {
       this.id = data.id;
-      console.log(data.id);
-      console.log(this.id);
       this.auth.profile(data.id).subscribe(
         user => {
           this.details = user;
@@ -53,7 +51,7 @@ export class ProfileComponent implements OnInit {
   updateUsername(): void {
     this.details.username = this.formUsername.value;
     this.auth.updateUser(this.details, this.id).subscribe((res1: UserInterface) => {
-        console.log(res1);
+        // console.log(res1);
       },
       error => {
         console.error(error);
@@ -65,7 +63,7 @@ export class ProfileComponent implements OnInit {
   updateFirstName(): void {
     this.details.first_name = this.formFirstName.value;
     this.auth.updateUser(this.details, this.id).subscribe((res2: UserInterface) => {
-        console.log(res2);
+        // console.log(res2);
       },
       error => {
         console.error(error);
@@ -77,7 +75,7 @@ export class ProfileComponent implements OnInit {
   updateLastName(): void {
     this.details.last_name = this.formLastName.value;
     this.auth.updateUser(this.details, this.id).subscribe((res3: UserInterface) => {
-        console.log(res3);
+        // console.log(res3);
       },
       error => {
         console.error(error);
@@ -89,7 +87,7 @@ export class ProfileComponent implements OnInit {
   updateEmail(): void {
     this.details.email = this.formEmail.value;
     this.auth.updateUser(this.details, this.id).subscribe((res4: UserInterface) => {
-        console.log(res4);
+        // console.log(res4);
       },
       error => {
         console.error(error);

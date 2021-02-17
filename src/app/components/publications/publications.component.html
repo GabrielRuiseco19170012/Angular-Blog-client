@@ -203,6 +203,7 @@
         <textarea class="form-control"  cols="30" rows="5" [(ngModel)]="selectedPublication.content" placeholder="Contenido"></textarea>
 <!--        <input type="text-area" class="form-control" id="content" name="content" [(ngModel)]="selectedPublication.content"-->
 <!--               placeholder="Contenido">-->
+        <input type="file" (change)="setFile($event)">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

@@ -1,6 +1,6 @@
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
-export const openClose = trigger('openClose', [
+export const animations = trigger('animations', [
   state('open', style({
     opacity: 1
   })),
@@ -17,16 +17,20 @@ export const openClose = trigger('openClose', [
 ]);
 
 export const showHide = trigger('showHide', [
-  state('open', style({
-    opacity: 1
-  })),
-  state('close', style({
+  state('void', style({
     opacity: 0
   })),
-  transition('close => open', [
-    animate('10s')
-  ]),
-  transition('open => close', [
-    animate('0s')
-  ]),
+  transition(':enter', [
+    animate('1.5s', style({opacity: 1}))
+  ])
+]);
+
+export const enterLeave = trigger('enterLeave', [
+  state('void', style({
+    transform: 'translateX(-100%)',
+    opacity: 0
+  })),
+  transition(':enter', [
+    animate('1s', style({transform: 'translateX(0)', opacity: 1}))
+  ])
 ]);

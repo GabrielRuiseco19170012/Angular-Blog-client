@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,13 @@ export class AuthGuardService {
   }
 
   async canActivate(): Promise<boolean> {
-    await this.auth.isLoggedIn().toPromise().then(result => {
-      console.log(result);
+    await this.auth.isLoggedIn().subscribe(result => {
+      // console.log(result);
       this.res = result;
-      console.log(this.res);
+      // console.log(this.res);
     });
     if (!this.res) {
-      this.router.navigateByUrl('/');
+      await this.router.navigateByUrl('/');
       window.alert('session expired');
       this.auth.logout();
       return false;

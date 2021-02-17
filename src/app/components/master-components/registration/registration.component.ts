@@ -3,11 +3,15 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserInterface} from '../../../interfaces/UserInterface';
 import {AuthService} from '../../../services/auth/auth.service';
 import {Router} from '@angular/router';
+import {enterLeave} from '../../../animations/animations';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
+  animations: [
+    enterLeave
+  ]
 })
 export class RegistrationComponent implements OnInit {
 

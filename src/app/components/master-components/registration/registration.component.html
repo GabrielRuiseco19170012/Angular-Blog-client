@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-md-5 col-10 mt-4">
-      <div class="card bg-dark border-info text-light">
+      <div class="card bg-dark border-info text-light" @enterLeave>
         <div class="card-body">
           <h1 class="text-center mt-3 mb-5">REGISTRATION</h1>
           <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">

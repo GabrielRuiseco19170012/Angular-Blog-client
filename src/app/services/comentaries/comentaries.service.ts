@@ -3,6 +3,7 @@ import {Comentary} from '../../interfaces/comentary';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import {ImageService} from '../Image/image.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class ComentariesService {
     return this.http.delete(`${environment.apiRoutes}delete/commentary?id=${id}`);
   }
 
-  updateCommentary(commentary: Comentary){
-    return this.http.put(`${environment.apiRoutes}update/comment`,commentary)
+  updateCommentary(commentary: Comentary): Observable<any> {
+    return this.http.put(`${environment.apiRoutes}update/comment`, commentary);
   }
 
 }

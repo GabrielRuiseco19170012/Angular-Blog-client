@@ -23,8 +23,8 @@ import {InterceptorService} from './services/interceptor/interceptor.service';
 import {AuthService} from './services/auth/auth.service';
 import {AuthGuardService} from './services/auth-guard/auth-guard.service';
 import {ComentariesService} from './services/comentaries/comentaries.service';
-import { BlogComponent } from './components/blog/blog.component';
-
+import {BlogComponent} from './components/blog/blog.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -49,6 +49,7 @@ import { BlogComponent } from './components/blog/blog.component';
   ],
   providers: [
     ComentariesService,
+    CookieService,
     AuthService,
     AuthGuardService,
     {

@@ -1,7 +1,7 @@
 <div class="container-fluid" style="height: 75vh">
   <div class="row justify-content-center">
-    <div class="col-md-3 col-8 mt-4">
-      <div class="card bg-dark border-info text-light">
+    <div class="col-md-4 col-sm-8 col-10 mt-4">
+      <div class="card bg-dark border-info text-light" @enterLeave>
         <div class="card-body">
           <h1 class="text-center mt-3 mb-5">LOGIN</h1>
           <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
@@ -21,9 +21,13 @@
                 <div *ngIf="form.get('password').errors.minlength">Password must be at least 6 characters long</div>
               </div>
             </div>
-            <button [disabled]="!form.valid" class="btn btn-info btn-block mb-5">
+
+            <button [disabled]="!form.valid" class="btn btn-info btn-block">
               LogIn
             </button>
+            <div class="text-center mb-5">
+              <label *ngIf="message" class="text-danger" style="font-size: 1.3em">{{message}}</label>
+            </div>
             <label for="singin">Not registered yet? click here: </label><a name="singin" [routerLink]="['/register']"
                                                                            class="text-light text-center">SingIn</a>
           </form>

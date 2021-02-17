@@ -1,16 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import
+{Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserInterface} from '../../../interfaces/UserInterface';
 import {AuthService} from '../../../services/auth/auth.service';
 import {Router} from '@angular/router';
+import {enterLeave} from '../../../animations/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [
+    enterLeave
+  ]
 })
 export class LoginComponent implements OnInit {
-
+  message: string = null;
   user: UserInterface;
 
   form = new FormGroup({
@@ -27,11 +32,17 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.user = this.form.value;
     this.auth.login(this.user).subscribe(
-      () => {
-        this.router.navigateByUrl('/profile');
+      data => {
+        if (data.token) {
+          this.router.navigateByUrl('/profile');
+        } else {
+          this.message = data.message;
+        }
       },
       error => {
-        console.error(error);
+        if (error.status === 401) {
+          this.message = 'Usuario no valido';
+        }
       }
     );
   }

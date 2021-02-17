@@ -7,29 +7,34 @@ import {TokenResponse} from '../../interfaces/TokenResponse';
 import {map} from 'rxjs/operators';
 import {UserInterface} from '../../interfaces/UserInterface';
 import {UserDetails} from '../../interfaces/user-details';
+import {CookieService} from 'ngx-cookie-service';
+import {TokenPayload} from '../../interfaces/TokenPayload';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private token: string;
+  private refreshToken: string;
   // tslint:disable-next-line:ban-types
   private state: Object;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
   }
 
-  private saveToken(token: string): void {
-    localStorage.setItem('userToken', token);
-    this.token = token;
-  }
-
-  private getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('usertoken');
-    }
-    return this.token;
-  }
+  // private saveToken(token: string): void {
+  //   this.cookieService.set('token', token, {expires: 10});
+  //   // localStorage.setItem('userToken', token);
+  //   this.token = token;
+  // }
+  //
+  // private getToken(): string {
+  //   if (!this.token) {
+  //     console.log(this.cookieService.get('token'));
+  //     this.token = localStorage.getItem('usertoken');
+  //   }
+  //   return this.token;
+  // }
 
   public getUserDetails(): Observable<any> {
     return this.http.get(environment.serverRoutes + 'loggedIn');
@@ -43,16 +48,22 @@ export class AuthService {
     return this.http.get(environment.serverRoutes + 'loginCheck');
   }
 
+  public refresh(refreshToken): Observable<TokenResponse> {
+    console.log(refreshToken);
+    return this.http.post<TokenResponse>(environment.serverRoutes + 'refreshToken', refreshToken);
+  }
+
   public navItems(): boolean {
-    return localStorage.getItem('value') === 'true';
+    return this.cookieService.check('token');
+    // return localStorage.getItem('value') === 'true';
   }
 
-  public register(user: UserInterface): Observable<any> {
-    return this.http.post(environment.serverRoutes + 'register', user);
+  public register(user: UserInterface): Observable<UserInterface> {
+    return this.http.post<UserInterface>(environment.serverRoutes + 'register', user);
   }
 
-  public updateUser(user: UserDetails, id): Observable<any> {
-    return this.http.put(environment.serverRoutes + `update/${id}`, user);
+  public updateUser(user: UserDetails, id): Observable<UserDetails> {
+    return this.http.put<UserDetails>(environment.serverRoutes + `update/${id}`, user);
   }
 
   public login(user: UserInterface): Observable<any> {
@@ -60,9 +71,9 @@ export class AuthService {
     return base.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
-          this.saveToken(data.token);
-          this.state = true;
-          localStorage.setItem('value', this.state.toString());
+          this.cookieService.set('token', data.token);
+          // this.saveToken(data.token);
+          this.cookieService.set('refreshToken', data.refreshToken);
         }
       })
     );
@@ -73,10 +84,8 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.state = false;
-    window.localStorage.removeItem('value');
-    this.token = '';
-    window.localStorage.removeItem('userToken');
+    this.cookieService.delete('refreshToken');
+    this.cookieService.delete('token');
     this.router.navigateByUrl('/login');
   }
 

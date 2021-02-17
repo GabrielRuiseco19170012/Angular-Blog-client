@@ -1,6 +1,8 @@
 <div *ngIf="details.id > 0" class="mb-4">
   <button class="btn btn-block btn-secondary" (click)="status=!status" *ngIf="status">Mostrar detalles</button>
-  <button class="btn btn-block btn-secondary" (click)="status=!status; statusCom=false" *ngIf="!status">Ocultar detalles</button>
+  <button class="btn btn-block btn-secondary" (click)="status=!status; statusCom=false" *ngIf="!status">Ocultar
+    detalles
+  </button>
 </div>
 <div>
   <div class="card" [@openClose]="this.status? 'close':'open'">
@@ -15,9 +17,15 @@
     </div>
     <div class="card-body" *ngIf="!status">
       <ul *ngIf="details" class="list-group">
-        <li class="list-group-item list-group-item-action">
+        <li class="list-group-item">
           <div class="row">
             <div class="col">Titulo: {{details.title}}</div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="d-flex justify-content-center">
+            <img *ngIf="selectedFile" src="http://127.0.0.1:3333/getImage?id={{details.id}}"
+                 style="height: 100px; width: 100px">
           </div>
         </li>
         <li class="list-group-item">
@@ -39,7 +47,7 @@
     </div>
     <div class="card-footer" *ngIf="statusCom">
       <div class="sc">
-        <div *ngFor="let com of comms" >
+        <div *ngFor="let com of comms">
           <ul *ngIf="details" class="list-group">
             <li class="list-group-item list-group-item-action">
               <div class="row justify-content-between" style="font-size: 0.7em">

@@ -6,14 +6,15 @@ import {Comentary} from '../../interfaces/comentary';
 import {FormControl} from '@angular/forms';
 import {ComentariesService} from '../../services/comentaries/comentaries.service';
 import {Publication} from '../../classes/publication';
-import {openClose} from '../../animations/open-close';
+import {animations} from '../../animations/animations';
+import {ImageService} from '../../services/Image/image.service';
 
 @Component({
   selector: 'app-publications',
   templateUrl: './publications.component.html',
   styleUrls: ['./publications.component.css'],
   animations: [
-    openClose
+    animations
   ]
 })
 export class PublicationsComponent implements OnInit {
@@ -27,9 +28,8 @@ export class PublicationsComponent implements OnInit {
   title: string;
   content: string;
 
-  // importante
   selectedPublication: Publication = new Publication();
-  //
+  selectedFile: File = null;
   @Output() details = new EventEmitter<Publication>();
 
   commentary: Comentary =
@@ -52,7 +52,8 @@ export class PublicationsComponent implements OnInit {
   arrayByTitle: Array<Publication>;
   arrayPublicaciones: Array<Publication>;
 
-  constructor(private commentaryService: ComentariesService, private publicationService: PublicationService, private auth: AuthService) {
+  constructor(private imageService: ImageService, private commentaryService: ComentariesService,
+              private publicationService: PublicationService, private auth: AuthService) {
   }
 
   ngOnInit(): void {
@@ -78,7 +79,7 @@ export class PublicationsComponent implements OnInit {
           this.auth.getUser(element.user_id).subscribe(d => {
             element.username = d.username;
             this.arrayPublicaciones = data;
-            console.log(this.arrayPublicaciones);
+            // console.log(this.arrayPublicaciones);
           });
         }
       },
@@ -105,7 +106,7 @@ export class PublicationsComponent implements OnInit {
         this.auth.getUser(element.user_id).subscribe(d => {
           element.username = d.username;
           this.arrayByTitle = data;
-          console.log(this.arrayPublicaciones);
+          // console.log(this.arrayPublicaciones);
         });
       }
     }, title => {
@@ -115,8 +116,13 @@ export class PublicationsComponent implements OnInit {
 
   addNewPost(): void {
     this.selectedPublication.user_id = this.user_id;
-    this.publicationService.addNewtPost(this.selectedPublication).subscribe((nuevo) => {
-      console.log(nuevo);
+    this.publicationService.addNewtPost(this.selectedPublication).subscribe(nuevo => {
+      const formData = new FormData();
+      // console.log(nuevo.id);
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      this.imageService.saveImage(formData, nuevo.id).subscribe(data => {
+        // console.log(data);
+      });
       this.getAll();
     });
     this.selectedPublication = new Publication();
@@ -124,21 +130,33 @@ export class PublicationsComponent implements OnInit {
 
   upTitlePost(): void {
     this.publicationService.upTitlePost(this.selectedPublication).subscribe(nuevo => {
-      console.log(nuevo);
+      // console.log(nuevo);
     });
   }
 
   upContentPost(): void {
     this.publicationService.upContentPost(this.selectedPublication).subscribe(nuevo => {
-      console.log(nuevo);
+      // console.log(nuevo);
     });
   }
 
   deletePost(publication: Publication): void {
     this.publicationService.deletePost(publication).subscribe((borrado) => {
-      console.log(borrado);
+      // console.log(borrado);
+      this.imageService.getFileData(publication.id).subscribe(data => {
+        this.imageService.deleteFile(data.id).subscribe(file => {
+          // console.log('file deleted', file);
+        });
+      });
       this.arrayPublicaciones = this.arrayPublicaciones.filter(x => x !== publication);
     });
   }
 
+  setFile($event: Event): void {
+    // @ts-ignore
+    if ($event.target.files[0]) {
+      // @ts-ignore
+      this.selectedFile = $event.target.files[0];
+    }
+  }
 }
