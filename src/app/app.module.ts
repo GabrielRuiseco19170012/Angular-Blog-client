@@ -25,6 +25,7 @@ import {AuthGuardService} from './services/auth-guard/auth-guard.service';
 import {ComentariesService} from './services/comentaries/comentaries.service';
 import {BlogComponent} from './components/blog/blog.component';
 import {CookieService} from 'ngx-cookie-service';
+import { ReversePipe } from './pipes/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {CookieService} from 'ngx-cookie-service';
     Page404Component,
     ProfileComponent,
     BlogComponent,
+    ReversePipe,
   ],
   imports: [
     BrowserModule,

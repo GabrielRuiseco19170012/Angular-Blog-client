@@ -9,6 +9,7 @@ import {openClose, showHide} from '../../animations/animations';
 import {PublicationService} from 'src/app/services/publication/publication.service';
 import {ImageService} from '../../services/Image/image.service';
 import {Image} from '../../classes/image';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comentaries',
@@ -53,6 +54,7 @@ export class ComentariesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.details.currentValue !== changes.details.previousValue) {
+      this.comms = [];
       this.getImage();
       this.getCommentariesByP();
     }
@@ -64,11 +66,11 @@ export class ComentariesComponent implements OnInit, OnChanges {
         for (const element of data) {
           this.auth.getUser(element.user_id).subscribe(d => {
             element.username = d.username;
-            // console.log(element);
+            console.log(data);
             this.comms = data;
+            console.log(this.comms);
           });
         }
-        // console.log(this.comms);
       },
       err => console.log(err)
     );
@@ -79,8 +81,19 @@ export class ComentariesComponent implements OnInit, OnChanges {
     this.comment.publication_id = this.details.id;
     this.commentaryService.createCommentary(this.comment).subscribe(
       resp => {
-        // console.log(resp);
-
+        Swal.fire({
+          icon: 'success',
+          title: 'Hecho!',
+          html: 'comentario guardado',
+          timer: 2000,
+          timerProgressBar: true,
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer');
+          }
+        });
+        this.comment = new Commentary();
         this.getCommentariesByP();
       },
       err => console.log(err)

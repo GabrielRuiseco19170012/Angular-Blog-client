@@ -40,11 +40,6 @@ export class PublicationService {
     return this.Http.put<PublicationInterface>(path, publicacion);
   }
 
-  public upContentPost(publicacion: PublicationInterface): Observable<any> {
-    const path = environment.apiRoutes + `update/publication/text/`;
-    return this.Http.put<PublicationInterface>(path, publicacion);
-  }
-
   public deletePost(publicacion: Publication): Observable<any> {
     const path = environment.apiRoutes + `delete/publication?id=${publicacion.id}`;
     return this.Http.delete(path);

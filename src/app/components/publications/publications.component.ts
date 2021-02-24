@@ -8,6 +8,7 @@ import {ComentariesService} from '../../services/comentaries/comentaries.service
 import {Publication} from '../../classes/publication';
 import {openClose} from '../../animations/animations';
 import {ImageService} from '../../services/Image/image.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-publications',
@@ -129,6 +130,11 @@ export class PublicationsComponent implements OnInit {
           this.imageService.saveImage(formData, nuevo.id).subscribe(() => {
             this.selectedFile = null;
             this.selectedPublication = new Publication();
+            Swal.fire(
+              'Publicadó!',
+              'tu publicación fue exitosa!',
+              'success'
+            );
           });
         }
         this.selectedPublication = new Publication();
@@ -139,12 +145,6 @@ export class PublicationsComponent implements OnInit {
 
   upTitlePost(): void {
     this.publicationService.upTitlePost(this.selectedPublication).subscribe(nuevo => {
-      // console.log(nuevo);
-    });
-  }
-
-  upContentPost(): void {
-    this.publicationService.upContentPost(this.selectedPublication).subscribe(nuevo => {
       // console.log(nuevo);
     });
   }
@@ -168,4 +168,7 @@ export class PublicationsComponent implements OnInit {
       this.selectedFile = $event.target.files[0];
     }
   }
+
+
 }
+

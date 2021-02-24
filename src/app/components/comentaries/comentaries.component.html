@@ -37,7 +37,7 @@
       <div class="row justify-content-center mt-4">
         <div class="col-12 text-center">
           <button type="button" class="btn bg-success text-light" data-bs-toggle="modal"
-                  data-bs-target="#modalComment">Comentar
+                  data-bs-target="#modalComment" *ngIf="details.id">Comentar
           </button>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <a class="text-info" (click)="statusCom=!statusCom">Mostrar comentarios</a>
       </div>
     </div>
-    <div class="card-footer" *ngIf="statusCom">
+    <div class="card-footer" *ngIf="statusCom" style="overflow-y: scroll; height: 20vh">
       <div class="sc">
         <div *ngFor="let com of comms">
           <ul *ngIf="details" class="list-group">
@@ -96,7 +96,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline-light" (click)="savedCommentary(); statusCom=!statusCom;" data-bs-dismiss="modal">Comentar
+        <button type="button" class="btn btn-outline-light" (click)="savedCommentary(); statusCom=true;" data-bs-dismiss="modal">Comentar
         </button>
       </div>
     </div>
